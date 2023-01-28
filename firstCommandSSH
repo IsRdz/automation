@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon May  9 00:51:19 2022
+
+@author: isrdz
+"""
+
+import paramiko
+import time
+host='172.20.20.41'
+username='nocdirecto'
+password='wot$l-r9p+sPlh2'
+port='22'
+
+session=paramiko.SSHClient()
+session.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+session.connect(hostname=host, port=port, username=username, password=password)
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('show env')
+print(stdout.read().decode())
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('show system resources')
+print(stdout.read())
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('show processes cpu history')
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('show version')
+print(stdout.read().decode())
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('exit')
+print(stdout.read().decode())
+time.sleep(2)
+
+session.close()
