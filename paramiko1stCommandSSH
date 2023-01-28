@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May  7 00:30:52 2022
+
+@author: isrdz
+"""
+
+import paramiko
+import time
+
+host='172.20.20.51'
+username='israel.rodriguez'
+password='jG9y]A2wQ/Ae?3yME'
+port='56473'
+
+session=paramiko.SSHClient()
+session.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+session.connect(hostname=host, port=port, username=username, password=password)
+
+time.sleep(3)
+
+stdin, stdout, stderr = session.exec_command('uptime')
+print(stdout.read().decode())
+time.sleep(1)
+#stdin, stdout, stderr = session.exec_command('top')
+#time.sleep(5)
+#stdin, stdout, stderr = session.exec_command('q')
+stdin, stdout, stderr = session.exec_command('vmstat')
+print(stdout.read().decode())
+time.sleep(1)
+stdin, stdout, stderr = session.exec_command('df -h')
+print(stdout.read().decode())
+time.sleep(2)
+stdin, stdout, stderr = session.exec_command('netstat -an')
+print(stdout.read().decode())
+time.sleep(1)
+
+session.close()
